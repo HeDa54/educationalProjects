@@ -8,7 +8,11 @@ namespace TestTaskForForward
         public static void Main(string[] args)
         {
             double ambientTemperature;
-            double time;
+            //double ambientTemperature =  55; // 32,239
+            //double ambientTemperature =  -555;
+            //double ambientTemperature =  555;
+            double timeToOverheat;
+            Engine engine = new Engine();
 
             Console.Write("Введите температуру окружающей среды: ");
             while (!double.TryParse(Console.ReadLine(), out ambientTemperature))    // проверка на корректный ввод данных
@@ -17,18 +21,12 @@ namespace TestTaskForForward
             }
             Console.WriteLine();
 
-            var testStand = new TestStand(ambientTemperature);
-            
+            timeToOverheat = new TestStand(engine, ambientTemperature).TimeToOverheat;
 
-            time = testStand.TimeToOverheat;
-            if (time != 0)
-            {
-                Console.WriteLine("Время работы двигателя до перегрева: " + time + " секунд");
-            }
+            if (timeToOverheat != -1)
+                Console.WriteLine($"Время работы двигателя до перегрева: {timeToOverheat} секунд");
             else
-            {
-                Console.WriteLine("Ошибка! Задана слишком низкая/высокая температура окружающей среды");
-            }
+                Console.WriteLine("Ошибка! Задана слишком низкая температура окружающей среды\nПри такой температуре перегрев труднодостижим");
             Console.ReadLine(); // чтобы не закрывалось окно консоли после выполнения программы
         }
         
