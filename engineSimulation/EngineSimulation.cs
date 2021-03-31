@@ -8,9 +8,6 @@ namespace TestTaskForForward
         public static void Main(string[] args)
         {
             double ambientTemperature;
-            //double ambientTemperature =  55; // 32,239
-            //double ambientTemperature =  -555;
-            //double ambientTemperature =  555;
             double timeToOverheat;
             Engine engine = new Engine();
 

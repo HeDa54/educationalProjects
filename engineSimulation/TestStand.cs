@@ -36,11 +36,11 @@ namespace TestTaskForForward
             while (engineTemperature < engine.overheatTemperature) 
                 {           
                 M = CalkM(x);
-                V += CalcA() * step;
+                V += CalcAcceleration(M, engine.I) * step;
                 x = V;
-                double Vh = CalcVh();
+                double Vh = CalculateVh(M, engine.Hm, V, engine.Hv);
                 Vh += Vh;
-                double Vc = CalcVc(ambientTemperature, engineTemperature);
+                double Vc = CalculateVc(ambientTemperature, engineTemperature, engine.C);
                 double Vsum = Vh + Vc;
                 engineTemperature += Vsum * step;
                 time += step;
@@ -57,7 +57,6 @@ namespace TestTaskForForward
             int start = 0;
             int end = 0;
 
-            //for (int i = 0; i < engine.listV.Count - 1; i++)
             for (int i = 0; i < engine.listV.Length - 1; i++)
                 {
                 if (engine.listV[i] <= x && engine.listV[i + 1] >= x)
@@ -78,21 +77,18 @@ namespace TestTaskForForward
             }
             return y;
         }
+     
 
-        private double CalcA() //вычисление ускорения скорости вращения
-        {
-            return M / engine.I;
-        }
+        //вычисление ускорения скорости вращения
+        private Func<double, double, double> CalcAcceleration = (M, I) => M / I; 
 
-        private double CalcVc(double ambientTemperature, double engineTemperature)
-        {
-            return engine.C * (ambientTemperature - engineTemperature);
-        }
+        //вычисление скорости охлаждения двигателя
+        private Func<double, double, double, double> CalculateVc = (aT, eT, C) => C * (aT - eT);
 
-        private double CalcVh()
-        {
-            return M * engine.Hm + Math.Pow(V, 2) * engine.Hv;
-        }
+        //вычисление скорости нагрева двигателя
+        private Func<double, double, double, double, double> CalculateVh = (M, Hm, V, Hv) => M * Hm + Math.Pow(V, 2) * Hv;
+
+        
 
     }
 }

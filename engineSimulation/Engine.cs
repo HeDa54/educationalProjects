@@ -16,9 +16,6 @@ namespace TestTaskForForward
         public double errorStable = 0.001; // Примерное значение M, при котором цикл не прекращается
         public double overheatTemperature = 110;   // Температура перегрева
 
-        //public List<double> listM = new List<double>() { 20, 75, 100, 105, 75, 0 };   // Крутящий момент    
-        //public List<double> listV = new List<double>() { 0, 75, 150, 200, 250, 300 }; // Скорость вращения коленвала
-
         public double[] listM = { 20, 75, 100, 105, 75, 0 };   // Крутящий момент    
         public double[] listV = { 0, 75, 150, 200, 250, 300 }; // Скорость вращения коленвала
 
